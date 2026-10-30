@@ -1,11 +1,12 @@
 {
+  "description": "Lembra o agente do board do Zordon no início da sessão. Só echo com aspas simples: o comando roda igual em bash (Linux e macOS), Git Bash e PowerShell (Windows sem Git Bash).",
   "hooks": {
     "SessionStart": [
       {
         "hooks": [
           {
             "type": "command",
-            "command": "sh \"${CLAUDE_PLUGIN_ROOT}/hooks/inicio-da-sessao.sh\""
+            "command": "echo 'Zordon: se o .mcp.json deste repositório tiver o servidor do Zordon (zordon.volund.com.br), ele é ligado ao board. Antes da primeira edição de código, confira a branch atual (git branch --show-current): sem referência de task (ABC-T-123), ou com a de uma task que não é a do pedido, siga a skill zordon-criar-task, seção \"Sem pedido\": procure a task e, se não existir, proponha e só crie com um sim. Se a conversa combinar trabalho que ainda não está no board, proponha a task do mesmo jeito.'"
           }
         ]
       }

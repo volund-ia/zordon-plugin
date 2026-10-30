@@ -210,3 +210,16 @@ test("sem pedido: propõe nos dois momentos e só cria com um sim", () => {
   assert.match(s, /link_task_branch/, "a task nova não liga a branch");
   assert.match(skill("zordon"), /propõe e só cria com um sim/, "a base não aponta para a criação sem pedido");
 });
+
+test("o hook de sessão é um echo que roda em bash, Git Bash e PowerShell", () => {
+  // A CLI roda hook de comando em bash (Linux, macOS), Git Bash ou PowerShell
+  // (Windows sem Git Bash). Só `echo 'texto'` é igual nos três; aspa simples,
+  // $ e crase dentro do texto quebrariam um deles.
+  const h = JSON.parse(readFileSync(resolve(SKILLS, "..", "hooks", "hooks.json"), "utf8"));
+  const cmd = h.hooks.SessionStart[0].hooks[0].command;
+  const texto = cmd.match(/^echo '(.*)'$/s)?.[1];
+  assert.ok(texto, "o hook não é echo '<texto>'");
+  assert.doesNotMatch(texto, /['$`]/);
+  assert.match(texto, /zordon-criar-task/);
+  assert.equal(h.hooks.SessionStart[0].hooks[0].shell, undefined, "shell fixo quebraria um dos sistemas");
+});

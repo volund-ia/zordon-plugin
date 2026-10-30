@@ -28,7 +28,7 @@ Proponha uma task, mesmo sem a pessoa pedir, em dois momentos.
 **1. Antes de codar algo que não tem task.**
 Você vai editar código num repositório de projeto do Zordon, e nem o pedido, nem a branch atual, nem a conversa trazem uma referência (`ABC-T-123`).
 Antes da primeira edição, procure se a task já existe (Passo 2): existindo, use a referência dela e siga.
-O aviso de início de sessão do plugin diz quando o repositório é ligado ao Zordon e se a branch já tem task.
+Confira a branch com `git branch --show-current`; o aviso de início de sessão do plugin lembra disso em todo repositório onde ele está ligado.
 No teste deste processo, sem o aviso, o agente codou direto e terminou sem commit: esperar o commit é tarde.
 Não existindo, proponha.
 Com o sim, crie, e a branch nasce com a referência (`change/<referência-em-minúsculas>-<slug>`, com `link_task_branch`): é o que liga o PR à task sozinho.

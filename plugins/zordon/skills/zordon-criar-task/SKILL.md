@@ -93,10 +93,16 @@ Inclua o caso negativo quando ele importa (quem não pode, o que não deve acont
 
 **Campos:**
 
+**Sem a pessoa pedir sprint, não passe `sprintId`: a task nasce no backlog.**
+Não copie a sprint de uma task vizinha que apareceu na busca, nem "a sprint atual" por conta própria.
+Pôr task em sprint compromete a capacidade do time e, em projeto ligado ao SISP, cria demanda para o cliente; é decisão de quem planeja.
+O mesmo vale para responsável, prioridade e pontos: só o que a pessoa disse.
+
+
 | Campo | Regra |
 |---|---|
 | `type` | `feature`, `bugfix`, `refactor`, `component`, `setup`, `seed`, `documentation`, `management` |
-| `sprintId` | Só se a pessoa disser a sprint (ou "nessa sprint": a corrente de `list_project_sprints`). Sem isso, backlog |
+| `sprintId` | Só se a pessoa disser a sprint ("nessa sprint" é a corrente de `list_project_sprints`). Sem isso, omita |
 | `userStoryId` | Só se existe story do mesmo objetivo (`list_project_stories`). Bug avulso não tem story |
 | `assigneeIds` | Só quem a pessoa nomear, resolvido em `list_project_members` |
 | `tagIds` | Só tags que já existem (`list_project_tags`). Criar tag nova é decisão de vocabulário do time: pergunte |

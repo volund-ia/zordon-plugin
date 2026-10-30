@@ -89,6 +89,13 @@ Inclua o caso negativo quando ele importa (quem não pode, o que não deve acont
 | "Tratar erros" | "Sem conexão, o botão Salvar mostra 'Sem conexão. Mudança revertida' e a lista volta ao estado anterior" |
 | "Permissão correta" | "Convidado do projeto recebe 403 ao chamar `PUT /api/tasks/<id>`" |
 
+**Valor esperado sai de execução, não de cabeça.**
+Se o critério cita um resultado ("retorna 21", "mostra R$ 1.234,00") e o código já roda, rode e copie o que saiu; se o valor depende do que ainda vai ser feito, calcule e confira o cálculo.
+Medido no teste deste processo: um critério dizia "retorna 20 dias úteis" para novembro de 2026, e o próprio script retornava 21; o critério reprovaria um código certo.
+
+**Não acrescente comportamento que a pessoa não pediu.**
+Extra que você acha útil (aceitar os dois formatos misturados, um filtro a mais) vira pergunta, ou vai em "Fora de escopo"; não vira critério.
+
 **Nunca invente regra de negócio para completar um critério.** Se o pedido não diz o que acontece num caso, escreva o critério que você tem e ponha a dúvida em "Contexto" como pergunta aberta, ou pergunte à pessoa antes de criar.
 
 **Campos:**

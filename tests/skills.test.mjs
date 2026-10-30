@@ -220,6 +220,8 @@ test("o hook de sessão é um echo que roda em bash, Git Bash e PowerShell", () 
   const texto = cmd.match(/^echo '(.*)'$/s)?.[1];
   assert.ok(texto, "o hook não é echo '<texto>'");
   assert.doesNotMatch(texto, /['$`]/);
+  // Medido no CI (windows-latest, PowerShell): acento chega como "reposit\uFFFDrio".
+  assert.match(texto, /^[\x20-\x7e]+$/, "o texto do hook tem de ser ASCII");
   assert.match(texto, /zordon-criar-task/);
   assert.equal(h.hooks.SessionStart[0].hooks[0].shell, undefined, "shell fixo quebraria um dos sistemas");
 });

@@ -44,8 +44,11 @@ No `.mcp.json` do repositório, com o id do projeto:
 }
 ```
 
-## De onde vem
+## Este repositório é a fonte
 
-Este repositório é publicado automaticamente a partir de `agent-surface/plugin/` do repositório do Zordon, a cada merge na `main`.
-Não edite aqui: a próxima publicação sobrescreve.
-O Alpha da Esteira é semeado a partir das mesmas skills.
+Editar uma skill é um PR aqui.
+O CI roda `node --test tests/*.test.mjs` (as skills contra o processo) e o `claude plugin validate`.
+Cada commit na `main` vira uma versão nova: quem já tem o plugin recebe com `claude plugin update zordon@volund` ou no próximo início do Claude Code.
+
+O Alpha da Esteira (Volund OS) usa as mesmas skills `zordon` e `zordon-executar-task`.
+Quem semeia é o `scripts/esteira/seed.mjs` do repositório do Zordon, que lê este repositório na `main`; depois de mudar uma dessas skills, rode o seed para o Alpha pegar a versão nova.

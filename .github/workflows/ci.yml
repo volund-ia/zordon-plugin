@@ -1,0 +1,21 @@
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  skills:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: as skills contra o processo
+        run: node --test tests/*.test.mjs
+      - name: manifesto do marketplace e do plugin
+        run: |
+          npx -y @anthropic-ai/claude-code plugin validate .
+          npx -y @anthropic-ai/claude-code plugin validate plugins/zordon

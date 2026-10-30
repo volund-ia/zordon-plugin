@@ -1,0 +1,17 @@
+{
+  "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
+  "name": "zordon",
+  "description": "Skills para agentes trabalharem no board do Zordon pelo MCP dele: a base (vocabulário e regras), criar task ancorada no código e executar task do plano com protótipo até o PR em draft com prova.",
+  "author": {
+    "name": "Volund",
+    "url": "https://github.com/volund-ia"
+  },
+  "homepage": "https://github.com/volund-ia/zordon-plugin",
+  "repository": "https://github.com/volund-ia/zordon-plugin",
+  "keywords": [
+    "zordon",
+    "board",
+    "tasks",
+    "esteira"
+  ]
+}

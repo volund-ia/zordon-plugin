@@ -1,0 +1,18 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "volund",
+  "owner": {
+    "name": "Volund",
+    "url": "https://github.com/volund-ia"
+  },
+  "metadata": {
+    "description": "Plugins da Volund para os repositórios dos projetos."
+  },
+  "plugins": [
+    {
+      "name": "zordon",
+      "source": "./plugins/zordon",
+      "description": "Skills do board do Zordon: base, criar task e executar task até o PR."
+    }
+  ]
+}

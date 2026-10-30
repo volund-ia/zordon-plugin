@@ -191,3 +191,22 @@ test("o processo nunca marca critério de aceite", () => {
   // ZRDN-T-101: o agente marcou os cinco critérios no mesmo run em que abriu o PR.
   assert.match(skill("zordon-executar-task"), /Nunca chame `check_acceptance_criteria`/);
 });
+
+// ── Criar task sem pedido ───────────────────────────────────────────────────
+
+test("sem pedido: propõe nos dois momentos e só cria com um sim", () => {
+  // Decisão de 30/10/2026: medido 16% dos PRs mergeados sem task. O agente
+  // propõe antes de codar algo sem task e quando a conversa combina trabalho
+  // novo; nada nasce sem o sim da pessoa.
+  const c = skill("zordon-criar-task");
+  const fm = c.match(/^description: (.*)$/m)[1];
+  assert.match(fm, /SEM pedido/, "a description não dispara a skill sem pedido");
+  const s = secao(c, /^## Sem pedido: propor, e criar só com um sim/m);
+  assert.match(s, /Antes de codar algo que não tem task/);
+  assert.match(s, /conversa ou uma reunião combinar trabalho/);
+  assert.match(s, /Só crie com um sim explícito/);
+  assert.match(s, /Silêncio, "depois vejo" ou mudança de assunto são não/);
+  assert.match(s, /não pergunte de novo nesta conversa/);
+  assert.match(s, /link_task_branch/, "a task nova não liga a branch");
+  assert.match(skill("zordon"), /propõe e só cria com um sim/, "a base não aponta para a criação sem pedido");
+});

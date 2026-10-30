@@ -14,7 +14,7 @@ O procedimento de cada trabalho está em outra skill:
 
 | Trabalho | Skill |
 |---|---|
-| Criar uma task (ou várias) | `zordon-criar-task` |
+| Criar uma task (ou várias), inclusive sem pedido: antes de codar algo que não tem task, ou quando a conversa combinar trabalho que não está no board (aí propõe e só cria com um sim) | `zordon-criar-task` |
 | Levar uma task até o PR: plano com protótipo, código, prova | `zordon-executar-task` |
 
 ## OpenSpec não faz parte do processo

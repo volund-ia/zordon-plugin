@@ -90,7 +90,7 @@ Inclua o caso negativo quando ele importa (quem não pode, o que não deve acont
 | "Permissão correta" | "Convidado do projeto recebe 403 ao chamar `PUT /api/tasks/<id>`" |
 
 **Valor esperado sai de execução, não de cabeça.**
-Se o critério cita um resultado ("retorna 21", "mostra R$ 1.234,00") e o código já roda, rode e copie o que saiu; se o valor depende do que ainda vai ser feito, calcule e confira o cálculo.
+Critério que cita um resultado ("retorna 21", "mostra R$ 1.234,00", "quinta-feira"): antes do `create_task`, rode o código que já existe e copie o que saiu; se o valor depende do que ainda vai ser feito, calcule com um comando (`node -e`, `python3 -c`, `date`) e não de cabeça.
 Medido no teste deste processo: um critério dizia "retorna 20 dias úteis" para novembro de 2026, e o próprio script retornava 21; o critério reprovaria um código certo.
 
 **Não acrescente comportamento que a pessoa não pediu.**

@@ -1,6 +1,6 @@
 ---
 name: zordon-criar-task
-description: Cria task no Zordon ancorada no código: procura duplicata, cita o caminho do código, critérios verificáveis, ids reais. Use quando pedirem "cria uma task", "abre um bug", "registra no board", "quebra em tasks", e também SEM pedido, propondo e só criando com um sim: antes de codar algo que não tem task no Zordon, e quando a conversa ou uma reunião combinar trabalho que ainda não está no board.
+description: Cria task no Zordon ancorada no código: procura duplicata, cita o caminho do código, critérios verificáveis, ids reais. Use quando pedirem "cria uma task", "abre um bug", "registra no board", "quebra em tasks", "joga no backlog", para backfill de trabalho já entregue, e também SEM pedido, propondo e só criando com um sim: antes de codar algo que não tem task no Zordon, e quando a conversa ou uma reunião combinar trabalho que ainda não está no board.
 ---
 
 # Criar task no Zordon
@@ -26,8 +26,9 @@ Medido em 30 dias: de 1.046 PRs mergeados nos repositórios dos projetos, 170 (1
 Proponha uma task, mesmo sem a pessoa pedir, em dois momentos.
 
 **1. Antes de codar algo que não tem task.**
-Você vai editar código num repositório de projeto do Zordon, e nem o pedido, nem a branch atual, nem a conversa trazem uma referência (`ABC-T-123`).
-Antes da primeira edição, procure se a task já existe (Passo 2): existindo, use a referência dela e siga.
+Você vai editar código num repositório de projeto do Zordon, nem o pedido nem a conversa trazem uma referência (`ABC-T-123`), e a branch atual está sem referência ou tem a de uma task que não é a do pedido.
+Antes da primeira edição, procure se a task já existe (Passo 2).
+Existindo, use a referência dela e, se a branch atual não a tem, crie `change/<referência-em-minúsculas>-<slug>` com `link_task_branch` antes de editar.
 Confira a branch com `git branch --show-current`; o aviso de início de sessão do plugin lembra disso em todo repositório onde ele está ligado.
 No teste deste processo, sem o aviso, o agente codou direto e terminou sem commit: esperar o commit é tarde.
 Não existindo, proponha.

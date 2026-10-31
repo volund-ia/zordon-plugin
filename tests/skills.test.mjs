@@ -208,6 +208,10 @@ test("sem pedido: propõe nos dois momentos e só cria com um sim", () => {
   assert.match(s, /Silêncio, "depois vejo" ou mudança de assunto são não/);
   assert.match(s, /não pergunte de novo nesta conversa/);
   assert.match(s, /link_task_branch/, "a task nova não liga a branch");
+  assert.match(s, /tem a de uma task que não é a do pedido/, "a branch de outra task fica fora da seção");
+  assert.match(s, /Existindo, use a referência dela e, se a branch atual não a tem, crie/, "a task existente não ganha branch");
+  assert.match(fm, /joga no backlog/, "a description perdeu o gatilho de backlog");
+  assert.match(fm, /backfill de trabalho já entregue/, "a description perdeu o gatilho de backfill");
   assert.match(skill("zordon"), /propõe e só cria com um sim/, "a base não aponta para a criação sem pedido");
 });
 

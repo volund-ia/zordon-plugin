@@ -215,6 +215,25 @@ test("sem pedido: propõe nos dois momentos e só cria com um sim", () => {
   assert.match(skill("zordon"), /propõe e só cria com um sim/, "a base não aponta para a criação sem pedido");
 });
 
+test("o plugin traz o MCP do Zordon sem projeto fixo, e a base acha o projeto pelo repositório", () => {
+  // Decisão de 31/10/2026: o MCP vem do plugin, igual em todo repositório. Quem
+  // diz o projeto é o repositório (list_projects com repo, ZRDN-T-348), não a
+  // pessoa, que pode estar em vários projetos.
+  const mcp = JSON.parse(readFileSync(resolve(SKILLS, "..", ".mcp.json"), "utf8"));
+  const servidores = Object.values(mcp.mcpServers);
+  assert.equal(servidores.length, 1, "um servidor só");
+  const url = new URL(servidores[0].url);
+  assert.equal(url.origin + url.pathname, "https://zordon.volund.com.br/mcp");
+  assert.equal(url.searchParams.get("project"), null, "projeto fixo na URL do plugin vale para todo repositório");
+  assert.equal(servidores[0].type, "http");
+  const s = secao(skill("zordon"), /^## Qual é o projeto/m);
+  assert.match(s, /git remote get-url origin/);
+  assert.match(s, /`list_projects` com `repo`/);
+  assert.match(s, /\*\*Mais de um\*\*[^\n]*pergunte qual/);
+  assert.match(s, /Sem pedido, não faça nada no board/);
+  assert.doesNotMatch(skill("zordon"), /adiciona o servidor no `\.mcp\.json`/, "a base ainda manda configurar o MCP à mão");
+});
+
 test("o hook de sessão é um echo que roda em bash, Git Bash e PowerShell", () => {
   // A CLI roda hook de comando em bash (Linux, macOS), Git Bash ou PowerShell
   // (Windows sem Git Bash). Só `echo 'texto'` é igual nos três; aspa simples,

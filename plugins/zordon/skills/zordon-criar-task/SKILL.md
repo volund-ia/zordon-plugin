@@ -58,7 +58,7 @@ A task proposta segue o Passo 4 inteiro (backlog, sem responsável, prioridade o
 
 ## Passo 1: Entender o pedido, e o projeto
 
-Se a pessoa não disse o projeto e a conexão não tem um, `list_projects` e pergunte qual.
+Se a pessoa não disse o projeto e a conexão não tem um, descubra pelo repositório (skill `zordon`, "Qual é o projeto"); sem um projeto único, pergunte qual.
 Se o pedido cabe em mais de uma task (duas telas, back e front com entregas separadas, um bug e uma melhoria), diga como vai quebrar antes de criar.
 Uma task é uma entrega que alguém consegue terminar e provar sozinha.
 

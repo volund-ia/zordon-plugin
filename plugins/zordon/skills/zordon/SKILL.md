@@ -25,12 +25,25 @@ O que define o trabalho é a task no board (descrição e critérios de aceite);
 
 ## Conexão
 
-As tools vêm de um servidor MCP apontado para `https://zordon.volund.com.br/mcp`.
-O nome do servidor muda de repo para repo (`zordon`, `zordon-board`, `zordon-vitoria`), então reconheça as tools pelo nome delas: `get_task_detail`, `search_entities`, `create_task`.
-O `project=<id>` da URL fixa o projeto da conexão, e as tools de projeto usam esse projeto sem você passar nada.
+As tools vêm do servidor MCP do Zordon, `https://zordon.volund.com.br/mcp`.
+O plugin já traz esse servidor, sem projeto fixo, e a pessoa só autentica.
+Reconheça as tools pelo nome delas (`get_task_detail`, `search_entities`, `create_task`), não pelo nome do servidor, que muda conforme quem o configurou.
 
-- **Sem as tools do Zordon na sessão:** diga isso e pare. Não reconstrua a task pelo que a pessoa colou nem invente o board. Para conectar, a pessoa adiciona o servidor no `.mcp.json` do repo (`"url": "https://zordon.volund.com.br/mcp?agent=vitoria&project=<id-do-projeto>"`) e autentica.
-- **Conexão sem projeto, ou task de outro projeto:** `list_projects` diz o que a pessoa alcança; passe `projectId` ou `projectName` nas tools que aceitam.
+- **Sem as tools do Zordon na sessão:** diga isso e pare. Não reconstrua a task pelo que a pessoa colou nem invente o board. O plugin traz o servidor; se as tools não aparecem, a pessoa autentica pelo `/mcp` do Claude Code.
+- **Conexão com `project=<id>` na URL** (o Alpha, ou um `.mcp.json` antigo no repositório): as tools de projeto usam esse projeto sem você passar nada.
+
+## Qual é o projeto
+
+Sem projeto fixo na conexão, quem diz o projeto é o repositório em que você está, não a pessoa, que pode estar em vários.
+
+1. Rode `git remote get-url origin`.
+2. Chame `list_projects` com `repo` igual a essa URL. Cada projeto vem com `repositories`; considere só os que contêm este repositório.
+3. Decida pelo número de projetos:
+   - **Um:** use o `id` dele como `projectId` em toda tool de projeto desta conversa, sem perguntar.
+   - **Mais de um** (um repositório ligado a dois projetos): pergunte qual, uma vez por conversa.
+   - **Nenhum:** o repositório não está ligado a um projeto que a pessoa alcança. Se ela pediu trabalho no board, mostre os projetos de `list_projects` sem `repo` e pergunte qual; ligar o repositório ao projeto de vez é na tela do projeto (Editar projeto, Repositórios). Sem pedido, não faça nada no board.
+
+Task ou story citada pela referência (`ABC-T-123`) carrega o projeto dela em `get_task_detail` e `search_entities`: use esse, mesmo que seja de outro repositório.
 
 ## Vocabulário
 

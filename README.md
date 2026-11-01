@@ -30,19 +30,14 @@ No `.claude/settings.json` do repositório:
 Quem abrir o Claude Code no repositório recebe o pedido para confiar no marketplace e instalar o plugin.
 À mão: `claude plugin marketplace add volund-ia/zordon-plugin` e `claude plugin install zordon@volund`.
 
-As skills precisam do MCP do Zordon na sessão.
-No `.mcp.json` do repositório, com o id do projeto:
+O plugin traz o MCP do Zordon (`plugins/zordon/.mcp.json`), numa URL sem projeto fixo, igual para todo repositório.
+Na primeira sessão, a pessoa autentica pelo `/mcp` do Claude Code.
 
-```json
-{
-  "mcpServers": {
-    "zordon": {
-      "type": "http",
-      "url": "https://zordon.volund.com.br/mcp?agent=vitoria&project=<id-do-projeto>"
-    }
-  }
-}
-```
+Quem diz o projeto é o repositório: o agente roda `git remote get-url origin` e chama `list_projects` com `repo`, que devolve os projetos ligados a ele.
+Para isso o repositório precisa estar ligado ao projeto no Zordon (Editar projeto, Repositórios).
+Repositório sem projeto ligado: o agente pergunta o projeto quando a pessoa pede trabalho no board, e não faz nada sem pedido.
+
+O `.mcp.json` do repositório com `project=<id>` na URL deixa de ser necessário.
 
 ## Este repositório é a fonte
 

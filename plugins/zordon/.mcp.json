@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "zordon": {
+      "type": "http",
+      "url": "https://zordon.volund.com.br/mcp?agent=vitoria"
+    }
+  }
+}

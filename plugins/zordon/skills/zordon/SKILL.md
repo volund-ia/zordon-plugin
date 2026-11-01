@@ -37,7 +37,7 @@ Reconheça as tools pelo nome delas (`get_task_detail`, `search_entities`, `crea
 Sem projeto fixo na conexão, quem diz o projeto é o repositório em que você está, não a pessoa, que pode estar em vários.
 
 1. Rode `git remote get-url origin`.
-2. Chame `list_projects` com `repo` igual a essa URL. Cada projeto vem com `repositories`; considere só os que contêm este repositório.
+2. Chame `list_projects` com `repo` igual a essa URL; se ela tiver usuário ou token antes do host (`https://x-access-token:…@github.com/…`), passe só `owner/name`, sem a credencial. Cada projeto vem com `repositories`; considere só os que contêm este repositório.
 3. Decida pelo número de projetos:
    - **Um:** use o `id` dele como `projectId` em toda tool de projeto desta conversa, sem perguntar.
    - **Mais de um** (um repositório ligado a dois projetos): pergunte qual, uma vez por conversa.

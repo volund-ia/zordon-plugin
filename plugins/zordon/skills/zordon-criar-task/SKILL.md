@@ -1,6 +1,6 @@
 ---
 name: zordon-criar-task
-description: Cria task no board do Zordon bem formada e ancorada no código do repositório - procura duplicata, lê o código que a task toca e cita o caminho, escreve critérios de aceite verificáveis e resolve sprint, story, pessoas e tags reais. Use quando pedirem "cria uma task", "abre um bug", "registra isso no Zordon/no board", "quebra isso em tasks", "joga no backlog", ou ao achar trabalho que precisa virar task. Também para backfill de trabalho já entregue.
+description: Cria task no Zordon ancorada no código: procura duplicata, cita o caminho do código, critérios verificáveis, ids reais. Use quando pedirem "cria uma task", "abre um bug", "registra no board", "quebra em tasks", "joga no backlog", para backfill de trabalho já entregue, e também SEM pedido, propondo e só criando com um sim: antes de codar algo que não tem task no Zordon, e quando a conversa ou uma reunião combinar trabalho que ainda não está no board.
 ---
 
 # Criar task no Zordon
@@ -17,6 +17,44 @@ Mas só 35% das tasks de agente citam um arquivo do código.
 Task de código sem o caminho do código obriga quem pega a refazer a busca que você já podia ter feito, e é onde o escopo se perde.
 
 Uma task boa responde três perguntas sem ninguém ao lado: **o que muda para quem usa**, **onde no código**, **como saber que ficou pronto**.
+
+## Sem pedido: propor, e criar só com um sim
+
+Trabalho que não passa pelo board some da velocidade, do faturamento e da vista do PM.
+Medido em 30 dias: de 1.046 PRs mergeados nos repositórios dos projetos, 170 (16%) não tinham referência de task; no `academia-volund`, 31 de 40.
+
+Proponha uma task, mesmo sem a pessoa pedir, em dois momentos.
+
+**1. Antes de codar algo que não tem task.**
+Você vai editar código num repositório de projeto do Zordon, nem o pedido nem a conversa trazem uma referência (`ABC-T-123`), e a branch atual está sem referência ou tem a de uma task que não é a do pedido.
+Antes da primeira edição, procure se a task já existe (Passo 2).
+Existindo, use a referência dela e, se a branch atual não a tem, crie `change/<referência-em-minúsculas>-<slug>` com `link_task_branch` antes de editar.
+Confira a branch com `git branch --show-current`; o aviso de início de sessão do plugin lembra disso em todo repositório onde ele está ligado.
+No teste deste processo, sem o aviso, o agente codou direto e terminou sem commit: esperar o commit é tarde.
+Não existindo, proponha.
+Com o sim, crie, e a branch nasce com a referência (`change/<referência-em-minúsculas>-<slug>`, com `link_task_branch`): é o que liga o PR à task sozinho.
+Com o não, siga sem task e não pergunte de novo nesta conversa.
+Não proponha para o que não edita código (ler, explicar, investigar) nem num repositório sem projeto no Zordon.
+Proponha e espere a resposta antes de editar: a task decide a branch.
+
+**2. Quando a conversa ou uma reunião combinar trabalho que não está no board.**
+"Então depois a gente faz X", "fica para a próxima sprint", "alguém precisa ver Y": na conversa, ou na transcrição de reunião que a pessoa trouxe ou que você leu pelo Zordon.
+Proponha no fim do assunto, todas juntas se forem várias, depois de procurar duplicata de cada uma.
+Decisão que é só opinião ("seria bom um dia") não é trabalho combinado: não proponha.
+
+**Como propor.** Curto, numa mensagem só, e pare esperando a resposta:
+
+```text
+Isso não tem task no Zordon. Crio esta no backlog de <projeto>?
+- <título>
+- Critérios: <um por linha, no máximo 3>
+- Código: `caminho/arquivo.ts`
+```
+
+Use `AskUserQuestion` quando existir (opções "Criar", "Criar com ajuste", "Não criar"); sem ele, a pergunta em texto.
+**Só crie com um sim explícito** da pessoa nesta conversa.
+Silêncio, "depois vejo" ou mudança de assunto são não.
+A task proposta segue o Passo 4 inteiro (backlog, sem responsável, prioridade ou pontos que a pessoa não disse).
 
 ## Passo 1: Entender o pedido, e o projeto
 

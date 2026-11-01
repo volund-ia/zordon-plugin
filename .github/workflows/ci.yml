@@ -4,6 +4,7 @@ on:
   pull_request:
   push:
     branches: [main]
+  workflow_dispatch:
 
 jobs:
   skills:
@@ -19,3 +20,26 @@ jobs:
         run: |
           npx -y @anthropic-ai/claude-code plugin validate .
           npx -y @anthropic-ai/claude-code plugin validate plugins/zordon
+
+  # O hook de início de sessão roda no Claude Code de verdade em cada sistema.
+  # No Windows, a CLI usa Git Bash quando existe e PowerShell quando não existe;
+  # a linha "powershell" força esse segundo caminho.
+  hook:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-24.04
+          - os: macos-latest
+          - os: windows-latest
+          - os: windows-latest
+            flag: --powershell
+    runs-on: ${{ matrix.os }}
+    name: hook (${{ matrix.os }} ${{ matrix.flag }})
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: npm install -g @anthropic-ai/claude-code
+      - run: node tests/hook-sessao.mjs ${{ matrix.flag }}

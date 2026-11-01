@@ -191,3 +191,41 @@ test("o processo nunca marca critério de aceite", () => {
   // ZRDN-T-101: o agente marcou os cinco critérios no mesmo run em que abriu o PR.
   assert.match(skill("zordon-executar-task"), /Nunca chame `check_acceptance_criteria`/);
 });
+
+// ── Criar task sem pedido ───────────────────────────────────────────────────
+
+test("sem pedido: propõe nos dois momentos e só cria com um sim", () => {
+  // Decisão de 30/10/2026: medido 16% dos PRs mergeados sem task. O agente
+  // propõe antes de codar algo sem task e quando a conversa combina trabalho
+  // novo; nada nasce sem o sim da pessoa.
+  const c = skill("zordon-criar-task");
+  const fm = c.match(/^description: (.*)$/m)[1];
+  assert.match(fm, /SEM pedido/, "a description não dispara a skill sem pedido");
+  const s = secao(c, /^## Sem pedido: propor, e criar só com um sim/m);
+  assert.match(s, /Antes de codar algo que não tem task/);
+  assert.match(s, /conversa ou uma reunião combinar trabalho/);
+  assert.match(s, /Só crie com um sim explícito/);
+  assert.match(s, /Silêncio, "depois vejo" ou mudança de assunto são não/);
+  assert.match(s, /não pergunte de novo nesta conversa/);
+  assert.match(s, /link_task_branch/, "a task nova não liga a branch");
+  assert.match(s, /tem a de uma task que não é a do pedido/, "a branch de outra task fica fora da seção");
+  assert.match(s, /Existindo, use a referência dela e, se a branch atual não a tem, crie/, "a task existente não ganha branch");
+  assert.match(fm, /joga no backlog/, "a description perdeu o gatilho de backlog");
+  assert.match(fm, /backfill de trabalho já entregue/, "a description perdeu o gatilho de backfill");
+  assert.match(skill("zordon"), /propõe e só cria com um sim/, "a base não aponta para a criação sem pedido");
+});
+
+test("o hook de sessão é um echo que roda em bash, Git Bash e PowerShell", () => {
+  // A CLI roda hook de comando em bash (Linux, macOS), Git Bash ou PowerShell
+  // (Windows sem Git Bash). Só `echo 'texto'` é igual nos três; aspa simples,
+  // $ e crase dentro do texto quebrariam um deles.
+  const h = JSON.parse(readFileSync(resolve(SKILLS, "..", "hooks", "hooks.json"), "utf8"));
+  const cmd = h.hooks.SessionStart[0].hooks[0].command;
+  const texto = cmd.match(/^echo '(.*)'$/s)?.[1];
+  assert.ok(texto, "o hook não é echo '<texto>'");
+  assert.doesNotMatch(texto, /['$`]/);
+  // Medido no CI (windows-latest, PowerShell): acento chega como "reposit\uFFFDrio".
+  assert.match(texto, /^[\x20-\x7e]+$/, "o texto do hook tem de ser ASCII");
+  assert.match(texto, /zordon-criar-task/);
+  assert.equal(h.hooks.SessionStart[0].hooks[0].shell, undefined, "shell fixo quebraria um dos sistemas");
+});
